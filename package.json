@@ -1,0 +1,32 @@
+{
+   "name": "general",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "devDependencies": {
+      "@types/jest": "^25.2.1",
+      "@types/node": "^8.0.29",
+      "@types/node-telegram-bot-api": "^0.40.3",
+      "eslint": "^6.8.0",
+      "jest": "^25.3.0",
+      "ts-jest": "^25.4.0",
+      "ts-node": "3.3.0",
+      "typescript": "^3.8.3"
+   },
+   "dependencies": {
+      "node-fetch": "^2.6.0",
+      "node-telegram-bot-api": "^0.40.0",
+      "reflect-metadata": "^0.1.10",
+      "sqlite3": "^4.0.3",
+      "tumblr.js": "^2.0.2",
+      "typeorm": "0.2.24"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "serve": "node dist/index.js",
+      "build": "npm run build-ts",
+      "build-ts": "tsc",
+      "watch-ts": "tsc -w",
+      "prune": "npm prune --production",
+      "test": "jest --forceExit --coverage --verbose"
+   }
+}
