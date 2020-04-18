@@ -9,7 +9,7 @@ export function getLogger(module: string) {
             }
         },
         log: function (...args: any[]) {
-            console.log('暂时不要用 log.log')
+            console.warn('暂时不建议使用 log.log')
             console.log(...args)
         },
         info: function (...args: any[]) {

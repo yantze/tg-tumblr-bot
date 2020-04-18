@@ -1,5 +1,10 @@
 import fetch from 'node-fetch'
 
+// query return status
+enum STATUS {
+    OK = 0,
+}
+
 export async function query(
     apiName: string,
     params: object,
@@ -24,7 +29,7 @@ export async function query(
     })
 
     const info = await res.json()
-    if (info.code === 0) {
+    if (info.code === STATUS.OK) {
         return info.data
     } else {
         console.log('info:', info)

@@ -13,9 +13,11 @@ let env = null
 try {
     const envJson = fs.readFileSync(path.join(__dirname, '../.env.json'))
     env = JSON.parse(envJson.toString())
+    log.debug('env.json:', envJson)
     Object.assign(process.env, env)
 } catch (error) {
     log.error(error)
 }
 
+log.info('Telegram Bot started.')
 startBot()
