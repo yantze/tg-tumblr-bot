@@ -1,5 +1,7 @@
 # Telegram tumblr Bot
 
+一个 telegram bot 和 tumblr 交互的 bot。同时也可以实现其它交互的比如 rss 订阅推送、汇率监听的脚手架。
+
 ## Start
 
 先在本地新建一个 `.env.json` 文件，加上 `TELEGRAM_BOT_TOKEN` (从 BotFather 中获取）,并且配置好 `TUSHARE_TOKEN` (从 tushare.pro 中获取）。
