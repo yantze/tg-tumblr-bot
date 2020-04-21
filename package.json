@@ -1,7 +1,7 @@
 {
-   "name": "general",
-   "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
+   "name": "tg-tumblr-bot",
+   "version": "0.0.2",
+   "description": "Telegram and tumblr bot",
    "devDependencies": {
       "@types/jest": "^25.2.1",
       "@types/node": "^8.0.29",

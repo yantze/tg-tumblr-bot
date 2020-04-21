@@ -4,7 +4,7 @@ function getDate(date) {
     return date.toISOString().slice(0, 10).replace(/-/g, '')
 }
 
-export async function check(limit: number) {
+export async function check() {
     const date = new Date()
     const preDayDate = new Date(date.getTime() - 3600 * 24 * 1000)
     const startDate = getDate(preDayDate)
@@ -22,10 +22,6 @@ export async function check(limit: number) {
 
     const today = data.items[0]
     const bidClose = today[3]
-    console.log('today:', today)
-    if (bidClose < limit) {
-        return bidClose
-    } else {
-        return null
-    }
+    // console.log('today:', today)
+    return bidClose
 }

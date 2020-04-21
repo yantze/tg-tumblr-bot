@@ -21,6 +21,7 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
         'msg.text': msgText,
         'register.user': registerUser,
         'listen.currency': listenCurrency,
+        'listen.currency.delete': listenCurrencyDelete,
         'crontab.currency': crontabCurrency,
     }
     return commands
@@ -44,9 +45,13 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
             bot.sendMessage(chatId, '监听失败，暂时只支持 CNY')
             return
         }
+        if (!payload.args[1] || typeof Number(payload.args[1]) !== 'number') {
+            bot.sendMessage(chatId, '监听失败，第二个参数需要数值')
+            return
+        }
         const data = {
             tsCode: tsCodes[payload.args[0]],
-            threshold: payload.args[1],
+            threshold: Number(payload.args[1]),
         }
         const type = 'currency'
 
@@ -58,6 +63,17 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
         bot.sendMessage(chatId, '监听失败')
     }
 
+    async function listenCurrencyDelete(payload: Payload) {
+        const chatId = payload.msg.chat.id + ''
+        const type = payload.args[0]
+        const result = await conn.manager.delete(Cron, {
+            type,
+            tgChatId: chatId,
+        })
+        log.info('listenCurrencyDelete', result)
+        bot.sendMessage(chatId, `已删除当前账户下 listen type ${type}`)
+    }
+
     async function crontabCurrency(payload: Payload) {
         const cron = payload.args[0]
         log.info('start check currency.')
@@ -65,15 +81,19 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
             log.error('Can not find tgChatId:', cron)
             return
         }
-        const bidClose = await currency.check(cron.threshold)
+        if (!cron.threshold) {
+            log.error('Can not find threshold:', cron)
+            return
+        }
+        const bidClose = await currency.check()
         log.info('返回汇率是：', bidClose)
-        if (bidClose && !cron.notify) {
+        if (bidClose < cron.threshold && !cron.notify) {
             bot.sendMessage(cron.tgChatId, `汇率变动: ${bidClose}`)
             cron.notify = true
             return
+        } else if (bidClose >= cron.threshold) {
+            cron.notify = false
         }
-
-        cron.notify = false
     }
 }
 
