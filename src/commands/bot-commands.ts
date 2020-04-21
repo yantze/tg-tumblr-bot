@@ -7,6 +7,8 @@ import { Payload, Commands } from '../types/common'
 import { User } from '../entity/User'
 import { Cron } from '../entity/Cron'
 
+import crontab from '../services/crontab'
+
 import * as currency from '../services/currency'
 
 const log = getLogger('commands')
@@ -60,18 +62,20 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
             bot.sendMessage(chatId, `监听成功: ${cron.jsonData}`)
             return
         }
+        await crontab.refresh()
         bot.sendMessage(chatId, '监听失败')
     }
 
     async function listenCurrencyDelete(payload: Payload) {
         const chatId = payload.msg.chat.id + ''
-        const type = payload.args[0]
+        const type = 'currency'
         const result = await conn.manager.delete(Cron, {
             type,
             tgChatId: chatId,
         })
         log.info('listenCurrencyDelete', result)
-        bot.sendMessage(chatId, `已删除当前账户下 listen type ${type}`)
+        await crontab.refresh()
+        bot.sendMessage(chatId, `已删除当前账户下 listen type: ${type}`)
     }
 
     async function crontabCurrency(payload: Payload) {

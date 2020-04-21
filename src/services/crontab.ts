@@ -60,6 +60,7 @@ export class Crontab {
      * 一般是重新从数据库里面读取数据
      */
     async refresh() {
+        this.stopAllTimers()
         cronArr = []
         const crons = await this.conn.manager.find(Cron, {})
         for (const cron of crons) {
@@ -78,6 +79,14 @@ export class Crontab {
             cronArr.push(cronData)
         }
         log.debug('crons:', crons)
+    }
+
+    stopAllTimers() {
+        if (!Array.isArray(cronArr)) return
+
+        for (const cron of cronArr) {
+            cron.timer && clearInterval(cron.timer)
+        }
     }
 }
 
