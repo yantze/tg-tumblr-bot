@@ -22,8 +22,9 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
     const commands: Commands = {
         'msg.text': msgText,
         'register.user': registerUser,
-        'listen.currency': listenCurrency,
-        'listen.currency.delete': listenCurrencyDelete,
+        'currency.listen': currencyListen,
+        'currency.delete': currencyDelete,
+        'currency.current': currencyCurrent,
         'crontab.currency': crontabCurrency,
     }
     return commands
@@ -40,7 +41,7 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
         bot.sendMessage(chatId, `注册成功: ${user.name}`)
     }
 
-    async function listenCurrency(payload: Payload) {
+    async function currencyListen(payload: Payload) {
         const chatId = payload.msg.chat.id + ''
 
         if (payload.args[0] !== 'CNY') {
@@ -66,7 +67,13 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
         bot.sendMessage(chatId, '监听失败')
     }
 
-    async function listenCurrencyDelete(payload: Payload) {
+    async function currencyCurrent(payload: Payload) {
+        const chatId = payload.msg.chat.id + ''
+        const bidClose = await currency.check()
+        bot.sendMessage(chatId, `当前汇率 USD to CNY: ${bidClose}`)
+    }
+
+    async function currencyDelete(payload: Payload) {
         const chatId = payload.msg.chat.id + ''
         const type = 'currency'
         const result = await conn.manager.delete(Cron, {
