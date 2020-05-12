@@ -1,3 +1,4 @@
+// Disable tips: "Automatic enabling of cancellation of promises is deprecated"
 process.env.NTBA_FIX_319 = '1'
 
 import TelegramBot = require('node-telegram-bot-api')
@@ -19,6 +20,7 @@ export async function startBot() {
     const bot = new TelegramBot(token, { polling: true })
 
     const conn = await createConnection()
+
     // Register telegram bot
     await unit.register(bot, conn)
 

@@ -44,3 +44,10 @@ npm run serve
 ## npm run prune
 
 可以把 development 相关的包清理掉，减少清理磁盘空间
+
+
+## 参考
+
+**typeorm 的使用**
+- https://github.com/typeorm/typescript-express-example/blob/master/src/index.ts
+- https://typeorm.io/#/entities/column-types

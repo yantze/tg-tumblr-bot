@@ -1,3 +1,6 @@
+import fs from 'fs'
+import path from 'path'
+
 export function getLogger(module: string) {
     return {
         debug: function (infomessage?: any, ...optionalParams: any[]) {
@@ -19,4 +22,9 @@ export function getLogger(module: string) {
             console.error(...args)
         },
     }
+}
+
+export function getEnv() {
+    const envJson = fs.readFileSync(path.join(__dirname, '../.env.json'))
+    return JSON.parse(envJson.toString())
 }
