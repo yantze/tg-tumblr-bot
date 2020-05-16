@@ -7,7 +7,7 @@ import { getLogger } from '../common/util'
 const log = getLogger('Crontab')
 
 // 每次轮训的时间
-const defaultTimeout = 20 * 1000
+const defaultTimeout = 3600 * 1000
 
 // 创建一个 pool ，记录了每个用户自己要求的设计间隔，或者默认的提示间隔
 // 如果长时间执行，就会导致数字超过
@@ -90,5 +90,4 @@ export class Crontab {
     }
 }
 
-// omniBot 想到一个新名字
 export default new Crontab()
