@@ -1,7 +1,15 @@
+import fs from 'fs'
+import path from 'path'
+
 import { startBot } from './telegram-bot'
-import { getLogger, getEnv } from './common/util'
+import { getLogger } from './common/util'
 
 const log = getLogger('index')
+
+function getEnv() {
+    const envJson = fs.readFileSync(path.join(__dirname, '../.env.json'))
+    return JSON.parse(envJson.toString())
+}
 
 try {
     const envJson = getEnv()
