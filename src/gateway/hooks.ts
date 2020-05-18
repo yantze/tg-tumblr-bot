@@ -27,8 +27,14 @@ export default (router: Router) => {
         })
     })
     router.on('/tg', (ctx) => {
+        const payload = ctx.req.json()
+        const username = payload.sender.login
+        const action = payload.action
+        const body = payload.comment && payload.comment.body
+        const title = payload.issue && payload.issue.title
+        const reply = `${username} ${action} comment in issue: ${title}\n${body}`
         ctx.unit.handleBotCommandId('msg.text', {
-            args: ['return from hook'],
+            args: [reply],
             info: {
                 chatId: '237319319',
             },
