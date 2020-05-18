@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import { IncomingMessage, ServerResponse } from 'http'
+import { ServerContext } from '../types/common'
 
 export default class Router extends EventEmitter {
     default: (ctx: any) => void = null
@@ -8,7 +8,7 @@ export default class Router extends EventEmitter {
         super()
     }
 
-    on(path: string, listener: (ctx: any) => void) {
+    on(path: string, listener: (ctx: ServerContext) => void) {
         if (path === '') {
             this.default = listener
         } else {
@@ -17,7 +17,7 @@ export default class Router extends EventEmitter {
         return this
     }
 
-    emit(path: string, ctx: any) {
+    emit(path: string, ctx: ServerContext) {
         if (this.eventNames().includes(path)) {
             return super.emit(path, ctx)
         } else {

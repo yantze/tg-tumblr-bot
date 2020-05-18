@@ -5,6 +5,7 @@ import { IncomingMessage, ServerResponse } from 'http'
 import Router from './router'
 import hooks from './hooks'
 import { Unit } from '../commands'
+import { ServerContext } from '../types/common'
 // writable steam
 // const busboy = require('busboy')
 
@@ -103,7 +104,7 @@ export default function gateway(unit: Unit) {
         }
         newReq.path = url.parse(req.url).pathname
 
-        const ctx = {
+        const ctx: ServerContext = {
             req: _req,
             res: _res,
             unit,

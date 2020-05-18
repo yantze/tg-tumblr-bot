@@ -39,7 +39,7 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
         } else {
             return
         }
-        bot.sendMessage(chatId, `${chatId}: ${JSON.stringify(payload.args)}`)
+        bot.sendMessage(chatId, `${chatId}: ${payload.args.join(' ')}`)
     }
 
     async function registerUser(payload: Payload) {

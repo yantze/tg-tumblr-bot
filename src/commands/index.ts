@@ -1,6 +1,6 @@
 import { getLogger } from '../common/util'
 import { Payload, Commands } from '../types/common'
-import { createConnection, Connection } from 'typeorm'
+import { Connection } from 'typeorm'
 import BotCommands from './bot-commands'
 import ChannelCommands from './channel-commands'
 import TelegramBot = require('node-telegram-bot-api')

@@ -32,7 +32,7 @@ export default (router: Router) => {
         const action = payload.action
         const body = payload.comment && payload.comment.body
         const title = payload.issue && payload.issue.title
-        const reply = `${username} ${action} comment in issue: ${title}\n${body}`
+        const reply = `${username} ${action} comment in issue: "${title}" --- ${body}`
         ctx.unit.handleBotCommandId('msg.text', {
             args: [reply],
             info: {
