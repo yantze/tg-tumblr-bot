@@ -2,19 +2,13 @@ import EventEmitter from 'events'
 import { IncomingMessage, ServerResponse } from 'http'
 
 export default class Router extends EventEmitter {
-    default: (req: IncomingMessage, res: ServerResponse) => void = null
+    default: (ctx: any) => void = null
 
     constructor() {
         super()
     }
 
-    on(
-        path: string,
-        listener: (
-            req: IncomingMessage | any,
-            res: ServerResponse | any,
-        ) => void,
-    ) {
+    on(path: string, listener: (ctx: any) => void) {
         if (path === '') {
             this.default = listener
         } else {
@@ -23,12 +17,12 @@ export default class Router extends EventEmitter {
         return this
     }
 
-    emit(path: string, req: IncomingMessage, res: ServerResponse) {
+    emit(path: string, ctx: any) {
         if (this.eventNames().includes(path)) {
-            return super.emit(path, req, res)
+            return super.emit(path, ctx)
         } else {
-            typeof this.default === 'function' && this.default(req, res)
+            typeof this.default === 'function' && this.default(ctx)
+            return true
         }
-        return true
     }
 }

@@ -31,6 +31,15 @@ export default (conn: Connection, bot: TelegramBot): Commands => {
 
     function msgText(payload: Payload) {
         log.info(...payload.args)
+        let chatId: string
+        if (payload.msg) {
+            chatId = payload.msg.chat.id + ''
+        } else if (payload.info) {
+            chatId = payload.info.chatId
+        } else {
+            return
+        }
+        bot.sendMessage(chatId, `${chatId}: ${JSON.stringify(payload.args)}`)
     }
 
     async function registerUser(payload: Payload) {

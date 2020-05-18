@@ -68,4 +68,6 @@ export async function startBot() {
 
         unit.handleChannelCommandId('msg.text', { msg, args: [msg.text] })
     })
+
+    return unit
 }

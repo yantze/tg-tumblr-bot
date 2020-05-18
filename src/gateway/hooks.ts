@@ -1,27 +1,41 @@
 import Router from './router'
 
 export default (router: Router) => {
-    router.on('', (req, res) => {
-        res.writeHead(404, { 'Content-Type': 'text/plain' })
-        res.end()
+    router.on('', (ctx) => {
+        ctx.res.json({
+            _code: 404,
+            msg: 'No Route',
+        })
     })
-    router.on('/', (req, res) => {
-        res.json({
+    router.on('/', (ctx) => {
+        ctx.res.json({
             _code: 200,
             msg: 'Hello World!',
         })
     })
-    router.on('/raw', (req, res) => {
-        console.log('Headers:\n', req.headers)
-        console.log('query:\n', req.query)
-        console.log('rawData:\n', req.rawData)
+    router.on('/raw', (ctx) => {
+        console.log('Headers:\n', ctx.req.headers)
+        console.log('query:\n', ctx.req.query)
+        console.log('rawData:\n', ctx.req.rawData)
 
-        res.json({
+        ctx.res.json({
             _code: 200,
             msg: 'test complete1',
-            data: JSON.stringify(req.rawData),
-            headers: req.headers,
-            query: req.query,
+            data: JSON.stringify(ctx.req.rawData),
+            headers: ctx.req.headers,
+            query: ctx.req.query,
+        })
+    })
+    router.on('/tg', (ctx) => {
+        ctx.unit.handleBotCommandId('msg.text', {
+            args: ['return from hook'],
+            info: {
+                chatId: '237319319',
+            },
+        })
+        ctx.res.json({
+            _code: 200,
+            msg: 'send success',
         })
     })
 }
