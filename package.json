@@ -18,7 +18,7 @@
       "reflect-metadata": "^0.1.10",
       "sqlite3": "^4.0.3",
       "tumblr.js": "^2.0.2",
-      "typeorm": "0.2.24"
+      "typeorm": "0.2.25"
    },
    "scripts": {
       "start": "ts-node src/index.ts",
